@@ -1,7 +1,9 @@
-import TestPage from './components/Pages/testPage';
+import TestPagePlant from './components/Pages/testPagePlant';
 
 function App() {
-  return <TestPage />;
+  return (
+    <TestPagePlant/>
+  );
 }
 
 export default App;
