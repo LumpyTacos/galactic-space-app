@@ -1,40 +1,34 @@
-import { KeyboardControls } from '@react-three/drei';
-import type { KeyboardControlsEntry } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { useMemo } from 'react';
-import { Scene } from './components/canvas/Scene';
-import './index.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+} from "react-router-dom";
+import DashboardPage from "./pages/DashboardPage";
 
-// Define the actions and the keys that trigger them
-type Controls = 'forward' | 'back' | 'left' | 'right' | 'brake';
-
-const Controls = {
-  forward: 'forward' as Controls,
-  back: 'back' as Controls,
-  left: 'left' as Controls,
-  right: 'right' as Controls,
-  brake: 'brake' as Controls,
-};
-
-function App() {
-  // This mapping connects keyboard keys to our named actions
-  const map = useMemo<KeyboardControlsEntry<Controls>[]>(() => [
-    { name: Controls.forward, keys: ['ArrowUp', 'KeyW'] },
-    { name: Controls.back, keys: ['ArrowDown', 'KeyS'] },
-    { name: Controls.left, keys: ['ArrowLeft', 'KeyA'] },
-    { name: Controls.right, keys: ['ArrowRight', 'KeyD'] },
-    { name: Controls.brake, keys: ['Space'] },
-  ], []);
-
+export default function App() {
   return (
-    // KeyboardControls provides a context for reading keyboard input anywhere in the app
-    <KeyboardControls map={map}>
-      {/* Start the camera higher and more top-down (y increased, x/z adjusted) */}
-      <Canvas shadows camera={{ position: [0, 18, 8], fov: 55 }}>
-        <Scene />
-      </Canvas>
-    </KeyboardControls>
+    <Router>
+      <div className="flex flex-col h-screen bg-gray-100">
+        {/* Header Tabs */}
+        <header className="flex bg-gray-900 text-white items-center px-6 py-3 shadow-md">
+          <h1 className="text-xl font-bold flex-1">NASA Bioscience Explorer</h1>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto">
+          <Routes>
+            {/* Default to Dashboard */}
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+
+        <footer className="bg-gray-800 text-gray-300 text-center py-2 text-sm">
+          © 2025 NASA Bioscience AI Dashboard
+        </footer>
+      </div>
+    </Router>
   );
 }
-
-export default App;
