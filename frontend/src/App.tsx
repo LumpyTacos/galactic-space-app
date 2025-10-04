@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Canvas } from '@react-three/fiber';
+import { useState } from 'react';
+import { Scene } from './components/canvas/Scene';
+import { InfoPanel } from './components/ui/InfoPanel';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // State to control the visibility of the UI panel
+  const [activeStation, setActiveStation] = useState<string | null>(null);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* 2D UI Layer */}
+      {activeStation && (
+        <InfoPanel
+          title={activeStation}
+          onClose={() => setActiveStation(null)}
+        />
+      )}
+
+      {/* 3D Canvas Layer */}
+      <Canvas
+        camera={{
+          fov: 75,
+          position: [0, 0, 10],
+        }}
+      >
+        <Scene />
+        {/* Example of a clickable object to test the UI */}
+        <mesh position={[-3, 0, 0]} onClick={() => setActiveStation('Biology Station')}>
+          <boxGeometry />
+          <meshStandardMaterial color="royalblue" />
+        </mesh>
+      </Canvas>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
