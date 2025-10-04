@@ -1,9 +1,11 @@
-import { useState, useEffect, useMemo, ChangeEvent } from "react";
+import { useState, useEffect, useMemo } from "react";
+import type { ChangeEvent } from "react";
 import SummaryCard from "../shared/SummaryCard";
 import ChartSection from "./ChartSection";
 import { loadCsv, type PaperRecord } from "../../api/loadCsv";
+import SimpleChatbot from "./SimpleChatbot";
 
-export default function Dashboard(): JSX.Element {
+export default function Dashboard() {
   const [papers, setPapers] = useState<PaperRecord[]>([]);
   const [query, setQuery] = useState<string>("");
   const [sortAsc, setSortAsc] = useState<boolean>(true);
@@ -95,6 +97,13 @@ export default function Dashboard(): JSX.Element {
         </div>
         <div className="col-md-4">
           <SummaryCard title="Knowledge Gaps Identified" value="32" />
+        </div>
+      </div>
+
+      {/* Chatbot */}
+      <div className="row g-4 mb-4">
+        <div className="col-12">
+          <SimpleChatbot papers={papers} />
         </div>
       </div>
 

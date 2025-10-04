@@ -1,4 +1,5 @@
-import { useState, useEffect, ChangeEvent, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
+import type { ChangeEvent } from "react";
 import Papa from "papaparse";
 import type { PaperRecord } from "../../api/loadCsv";
 
